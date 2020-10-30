@@ -1,0 +1,25 @@
+.red-line{
+    margin-left: 16pt;
+}
+
+ol li{/* css selector */
+    text-decoration: line-through;
+}
+
+.game-img{
+    position: fixed;
+    width: 200px;
+
+    left: 0;
+    top: 0;
+    transition: top 1s, left 1s;
+}
+
+.controls{
+    position: fixed;
+    width: 300px;
+    height: 100px;
+    top: calc(50% - 50px);
+    left: calc(50% - 150px);
+
+}
