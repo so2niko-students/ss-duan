@@ -1,0 +1,7 @@
+.game-ball{
+    border-radius: 50%;
+    position: absolute;
+    top : 0;
+    left : 0;
+    transition: top 1s linear;
+}
