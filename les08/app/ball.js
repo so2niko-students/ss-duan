@@ -57,7 +57,7 @@ export default class Ball{
     }
 
     // onClick(){ //!variant for loosing context
-    onClick = () => {
+    onClick = () => {// !variant without loosing context
         clearInterval(this.interval);
         this.gameContainer.removeChild(this.node);
     }
