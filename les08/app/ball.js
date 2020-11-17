@@ -1,19 +1,28 @@
 export default class Ball{
     PX = 'px';
     VW = 'vw';
+    step = 22;
+    coordY = 0;
 
-    constructor(gameContainer){
+    constructor(gameContainer, methods){
         this.gameContainer = gameContainer;
+        this.methods = methods;
 
         this.length = this.random(20, 100);
         this.color = this.randomColor();
         this.coordX = this.random(0, 99);
-        this.coordY = 0;
-        this.step = 22;
 
         this.createNode();
 
         this.start();
+    }
+
+    pause(){
+        this.step = 0;
+    }
+
+    resume(){
+        this.step = 22;
     }
 
     random(from, to){
@@ -36,7 +45,7 @@ export default class Ball{
         this.node.classList.add('game-ball');
 
         // this.node.addEventListener('click', this.onClick.bind(this));//!variant for loosing context
-        this.node.addEventListener('click', this.onClick);
+        this.node.addEventListener('click', () => this.onClick(true));
 
         this.gameContainer.appendChild(this.node);
     }
@@ -57,7 +66,9 @@ export default class Ball{
     }
 
     // onClick(){ //!variant for loosing context
-    onClick = () => {// !variant without loosing context
+    onClick = (isClick = false) => {// !variant without loosing context
+        isClick ? this.methods.add() : this.methods.sub(this);
+
         clearInterval(this.interval);
         this.gameContainer.removeChild(this.node);
     }

@@ -5,3 +5,7 @@
     left : 0;
     transition: top 1s linear;
 }
+
+.tabloid-mus{
+    display: none;
+}

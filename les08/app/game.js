@@ -1,9 +1,6 @@
-import Ball from './ball.js';
+import Tabloid from './tabloid.js';
 
-const game = document.querySelector('.game');
+const tabloid = new Tabloid();
 
 
-const b1 = new Ball(game);
-
-console.log(b1);
 
