@@ -3,7 +3,7 @@ document.querySelector('#btn-generate').addEventListener('click', onClickGenerat
 function onClickGenerate(){
     //считать имя
     //если имени нет - предупредить пользователя о том, что он не ввел имя и выйти
-    const { isError, name } = inputAndCheckName();
+    const { isError, name, gender } = inputAndCheckName();
     if(isError){
         return;
     }
@@ -12,7 +12,8 @@ function onClickGenerate(){
     //https://randomuser.me/api/portraits/men/77.jpg
     //сгенерировать ссылку на аватар
     const avaN = random(0, 99);
-    const ava = `https://randomuser.me/api/portraits/men/${ avaN }.jpg`;
+    const avaG = gender == 'female' ? 'women' : 'men';
+    const ava = `https://randomuser.me/api/portraits/${ avaG }/${ avaN }.jpg`;
 
     //сгенерировать ХП и МП
     const hp = random(1, 100);
@@ -27,7 +28,7 @@ function onClickGenerate(){
     const clas = classes[random(0, classes.length - 1)];
 
     //Сформировать HTML и вставить в контейнер(body)
-    console.log(name, ava, hp, mp, race, clas);
+    console.log(name, gender, ava, hp, mp, race, clas);
     const heroHtml = `
     <div class="col mb-4">
     <div class="card h-100">
@@ -53,10 +54,12 @@ function onClickGenerate(){
 function inputAndCheckName(){
     const inpName = document.querySelector('#inp-name');
     const inpNameNot = document.querySelector('#inp-name-notify');
+    const inpGender = [...document.querySelectorAll('.inp-gender')];
    
     const answ = {
         isError : false,
-        name : inpName.value
+        name : inpName.value,
+        gender : inpGender.find(el => el.checked).value
     };
 
     inpName.value = '';
