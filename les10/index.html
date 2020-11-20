@@ -10,75 +10,13 @@
     <div class="container mt-3 mb-5">
         <div class="form-group">
           <input type="text" class="form-control" id="inp-name" placeholder="Hero name">
+          <small class="text-danger" id="inp-name-notify"></small>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-generate">Generate</button>
+        <button class="btn btn-primary btn-lg btn-block" id="btn-generate">Generate</button>
     </div>
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-3 row-cols-sm-2 row-cols-lg-4 row-cols-xl-6">
-            <div class="col mb-4">
-            <div class="card h-100">
-                <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <img src="https://randomuser.me/api/portraits/men/77.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title">Нагибатор 2020</h5>
-                <p class="card-text">Elven</p>
-                <p class="card-text">Mage</p>
-                </div>
-            </div>
-            </div>
-            <div class="col mb-4">
-            <div class="card h-100">
-                <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <img src="https://randomuser.me/api/portraits/men/77.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Нагибатор 2020</h5>
-                    <p class="card-text">Elven</p>
-                    <p class="card-text">Mage</p>
-                </div>
-            </div>
-            </div>
-            <div class="col mb-4">
-            <div class="card h-100">
-                <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <img src="https://randomuser.me/api/portraits/men/77.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Нагибатор 2020</h5>
-                    <p class="card-text">Elven</p>
-                    <p class="card-text">Mage</p>
-                </div>
-            </div>
-            </div>
-            <div class="col mb-4">
-            <div class="card h-100">
-                <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <img src="https://randomuser.me/api/portraits/men/77.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Нагибатор 2020</h5>
-                    <p class="card-text">Elven</p>
-                    <p class="card-text">Mage</p>
-                </div>
-            </div>
-            </div>
+        <div class="row row-cols-1 row-cols-md-3 row-cols-sm-2 row-cols-lg-4 row-cols-xl-6" id="hero-container">
+            
         </div>
     </div>
     <script src="app/main.js" type="module"></script>
