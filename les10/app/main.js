@@ -31,7 +31,13 @@ function onClickGenerate(){
     const clas = classes[random(0, classes.length - 1)];
 
     //Сформировать HTML и вставить в контейнер(body)
-    console.log(name, gender, ava, hp, mp, race, clas);
+    saveUser(name, gender, ava, hp, mp, race, clas, lvl);
+
+    renderUser({ name, ava, hp, mp, race, clas, lvl });
+
+}
+
+function renderUser({ name, ava, hp, mp, race, clas, lvl }){
     const heroHtml = `
     <div class="col mb-4">
     <div class="card h-100">
@@ -85,3 +91,43 @@ function inputAndCheckName(){
 function random(from = 1, to = 100){
     return Math.floor(Math.random() * (to - from + 1) + from);
 }
+
+function saveUser(name, gender, ava, hp, mp, race, clas, lvl){
+    const user = { name, gender, ava, hp, mp, race, clas, lvl };
+
+    let users = Cookie.get('users');
+    users = users === '' ? [] : JSON.parse(users);
+    users.push(user);
+    Cookie.set('users', JSON.stringify(users), 30);    
+}
+
+function firstLoad(){
+    let users = Cookie.get('users');
+    users = users === '' ? [] : JSON.parse(users);
+
+    console.log(users);
+
+    users.forEach(renderUser);
+}
+
+class Cookie{
+    static set(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+
+        const expires = `expires=${d.toUTCString()}`;
+        document.cookie = `${cname}=${cvalue};${expires};path=/`;
+    }
+    static get(cname) {
+        const name = `${cname}=`;
+        const coo = document.cookie.split(';')
+                    .find(el => (el.trim()).startsWith(name));
+
+        return coo ? coo.slice(name.length) : '';
+    }
+    static del(cname){
+        document.cookie = `${cname}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+}
+
+firstLoad();
