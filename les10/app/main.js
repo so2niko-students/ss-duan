@@ -73,8 +73,9 @@ function inputAndCheckName(){
     inpName.value = '';
     inpNameNot.innerText = '';
 
-    if(answ.name.length == 0){
-        inpNameNot.innerText = 'ENTER A HERO NAME!';
+    const regName = /\W/g;
+    if(answ.name.length == 0 || answ.name.match(regName)){
+        inpNameNot.innerText = 'ENTER A HERO NAME(!!WITHOUT NON-WORD CHARACTERS!!)!';
         answ.isError = true;
     }
 
