@@ -18,13 +18,16 @@ function onClickGenerate(){
     //сгенерировать ХП и МП
     const hp = random(1, 100);
     const mp = random(1, 100);
+    const lvl = random(1, 10);
 
     //Сгенерировать расу
-    const races = ['Human', 'Elven', 'Orc', 'Dragon', 'Dwarf', 'Undead', 'Troll'];
+    const races = ['Human', 'Elven', 'Orc', 'Dragon', 'Dwarf', 'Undead', 'Troll', 'Night Elf',
+    'Draenei', 'Worgen', 'Pandaren', 'Tauren', 'Blood Elf', 'Goblin'];
     const race = races[random(0, races.length - 1)];
 
     //Сгенерировать класс
-    const classes = ['Warrior', 'Mage', 'Warlock', 'Knight', 'Druid', 'Monk', 'Prophet'];
+    const classes = ['Warrior', 'Mage', 'Warlock', 'Knight', 'Druid', 'Monk', 'Prophet', 'Hunter',
+    'Rogue', 'Paladin', 'Shaman', 'Priest', 'Death Knight', 'Demon Hunter'];
     const clas = classes[random(0, classes.length - 1)];
 
     //Сформировать HTML и вставить в контейнер(body)
@@ -40,9 +43,14 @@ function onClickGenerate(){
         </div>
         <img src="${ ava }" class="card-img-top" alt="hero avatar">
         <div class="card-body">
-        <h5 class="card-title">${ name }</h5>
-        <p class="card-text">${ race }</p>
-        <p class="card-text">${ clas }</p>
+            <h5 class="card-title">${ name }</h5>
+            
+            <p class="card-text">${ race }</p>
+            <div class="float-right">
+                <span style="background-color: #eeffcd; color: purple; border-color: #f34c8a; 
+                border-radius: 10px;" class="card-text p-2">LVL ${lvl}</span>
+            </div>
+            <p class="card-text">${ clas }</p>
         </div>
     </div>
     </div>`;
