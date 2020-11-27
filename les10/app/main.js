@@ -1,6 +1,8 @@
+//TODO VIEW
 document.querySelector('#btn-generate').addEventListener('click', onClickGenerate);
 document.querySelector('#btn-delete-all').addEventListener('click', onClickDeleteAll);
 
+//TODO CONTROLLER
 function onClickGenerate(){
     //считать имя
     //если имени нет - предупредить пользователя о том, что он не ввел имя и выйти
@@ -14,39 +16,47 @@ function onClickGenerate(){
     //сгенерировать число для аватара и использовать url из API (0 -- 99)
     //https://randomuser.me/api/portraits/men/77.jpg
     //сгенерировать ссылку на аватар
+    //TODO MODEL
     const avaN = random(0, 99);
     const avaG = gender == 'female' ? 'women' : 'men';
     user.ava = `https://randomuser.me/api/portraits/${ avaG }/${ avaN }.jpg`;
 
+    //TODO MODEL
     //сгенерировать ХП и МП
     user.hp = random(1, 100);
     user.mp = random(1, 100);
     user.lvl = random(1, 10);
     user.uid = generateUID();
 
+    //TODO MODEL
     //Сгенерировать расу
     const races = ['Human', 'Elven', 'Orc', 'Dragon', 'Dwarf', 'Undead', 'Troll', 'Night Elf',
     'Draenei', 'Worgen', 'Pandaren', 'Tauren', 'Blood Elf', 'Goblin'];
     user.race = races[random(0, races.length - 1)];
 
+    //TODO MODEL
     //Сгенерировать класс
     const classes = ['Warrior', 'Mage', 'Warlock', 'Knight', 'Druid', 'Monk', 'Prophet', 'Hunter',
     'Rogue', 'Paladin', 'Shaman', 'Priest', 'Death Knight', 'Demon Hunter'];
     user.clas = classes[random(0, classes.length - 1)];
 
     //Сформировать HTML и вставить в контейнер(body)
+    //TODO MODEL
     saveUser(user);
 
     renderUser(user);
 
 }
 
+//TODO CONTROLLER
 function onClickDeleteAll(){
+    //TODO MODEL
     Cookie.set('users', JSON.stringify([]), 30);  
 
     firstLoad();
 }
 
+//TODO VIEW
 function renderUser({ name, ava, hp, mp, race, clas, lvl, uid }){
     const delClass = `btn-del-${ uid }`;
 
@@ -81,34 +91,43 @@ function renderUser({ name, ava, hp, mp, race, clas, lvl, uid }){
     document.querySelector(`.${ delClass }`).addEventListener('click', deleteUser);
 }
 
+//TODO CONTROLLER
 function deleteUser({ target }){
     const uidF = target.dataset.uid;
 
+    //TODO MODEL
     let users = Cookie.get('users');
     users = users === '' ? [] : JSON.parse(users);
 
+    //TODO MODEL
     users = users.filter(({ uid }) => uid != uidF);
     Cookie.set('users', JSON.stringify(users), 30);  
 
     firstLoad();
 }
 
+//TODO MODEL
 function inputAndCheckName(){
+    //TODO VIEW
     const inpName = document.querySelector('#inp-name');
     const inpNameNot = document.querySelector('#inp-name-notify');
     const inpGender = [...document.querySelectorAll('.inp-gender')];
    
+    //TODO MODEL
     const answ = {
         isError : false,
         name : inpName.value,
         gender : inpGender.find(el => el.checked).value
     };
 
+    //TODO VIEW
     inpName.value = '';
     inpNameNot.innerText = '';
 
+    //TODO MODEL
     const regName = /\W/g;
     if(answ.name.length == 0 || answ.name.match(regName)){
+        //TODO VIEW
         inpNameNot.innerText = 'ENTER A HERO NAME(!!WITHOUT NON-WORD CHARACTERS!!)!';
         answ.isError = true;
     }
@@ -116,10 +135,12 @@ function inputAndCheckName(){
     return answ;
 }
 
+//TODO MODEL
 function random(from = 1, to = 100){
     return Math.floor(Math.random() * (to - from + 1) + from);
 }
 
+//TODO MODEL
 function saveUser(user){
     let users = Cookie.get('users');
     users = users === '' ? [] : JSON.parse(users);
@@ -128,14 +149,16 @@ function saveUser(user){
 }
 
 function firstLoad(){
+    //TODO MODEL
     let users = Cookie.get('users');
     users = users === '' ? [] : JSON.parse(users);
 
+    //TODO VIEW
     document.querySelector('#hero-container').innerHTML = '';
-
     users.forEach(renderUser);
 }
 
+//TODO HELPER
 class Cookie{
     static set(cname, cvalue, exdays) {
         const d = new Date();
@@ -155,13 +178,16 @@ class Cookie{
     }
 }
 
+//TODO MODEL
 function generateUID(){
     const r = (Math.floor(Math.random() * 1000000)).toString(16);
     const d = Date.now().toString(16);
     return r + d;
 }
 
+
 function lastVisit(){
+    //TODO MODEL
     let visit = Cookie.get('visit');
     visit = visit == '' ? Date.now() : visit;
 
@@ -193,10 +219,10 @@ function lastVisit(){
         }
     }
 
+    //TODO VIEW
     document.querySelector('#info-last-visit').innerText = `: ${ interv }${ timeFormat} ago`;
 }
 
+//TODO CONTROLLER
 firstLoad();
 lastVisit();
-
-generateUID();
