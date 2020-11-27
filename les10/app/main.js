@@ -1,4 +1,5 @@
 document.querySelector('#btn-generate').addEventListener('click', onClickGenerate);
+document.querySelector('#btn-delete-all').addEventListener('click', onClickDeleteAll);
 
 function onClickGenerate(){
     //считать имя
@@ -38,6 +39,12 @@ function onClickGenerate(){
 
     renderUser(user);
 
+}
+
+function onClickDeleteAll(){
+    Cookie.set('users', JSON.stringify([]), 30);  
+
+    firstLoad();
 }
 
 function renderUser({ name, ava, hp, mp, race, clas, lvl, uid }){
