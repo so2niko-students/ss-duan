@@ -76,7 +76,7 @@ function renderUser({ name, ava, hp, mp, race, clas, lvl, uid }){
     </div>
     </div>`;
 
-    document.querySelector('#hero-container').innerHTML += heroHtml;
+    document.querySelector('#hero-container').insertAdjacentHTML('afterbegin', heroHtml);
 
     document.querySelector(`.${ delClass }`).addEventListener('click', deleteUser);
 }
@@ -131,8 +131,6 @@ function firstLoad(){
     let users = Cookie.get('users');
     users = users === '' ? [] : JSON.parse(users);
 
-    console.log(users);
-
     document.querySelector('#hero-container').innerHTML = '';
 
     users.forEach(renderUser);
@@ -148,10 +146,9 @@ class Cookie{
     }
     static get(cname) {
         const name = `${cname}=`;
-        const coo = document.cookie.split(';')
-                    .find(el => (el.trim()).startsWith(name));
+        const coo = document.cookie.split(';').find(el => (el.trim()).startsWith(name));
 
-        return coo ? coo.slice(name.length) : '';
+        return coo ? coo.trim().slice(name.length) : '';
     }
     static del(cname){
         document.cookie = `${cname}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -164,6 +161,42 @@ function generateUID(){
     return r + d;
 }
 
+function lastVisit(){
+    let visit = Cookie.get('visit');
+    visit = visit == '' ? Date.now() : visit;
+
+    const curTime = Date.now();
+    let interv = Math.floor((curTime - visit) / 1000);
+
+    Cookie.set('visit', curTime, 365);
+    let timeFormat = '';
+
+    switch(true){
+        case interv < 60 : {
+            timeFormat = 's';
+            break;
+        }
+        case interv >= 60 && interv < 3600 : {
+            interv = Math.floor(interv / 60);
+            timeFormat = 'm';
+            break;
+        }
+        case interv >= 3600 && interv < 3600 * 24 : {
+            interv = Math.floor(interv / 3600);
+            timeFormat = 'h';
+            break;
+        }
+        case interv >= 3600 * 24: {
+            interv = Math.floor(interv / 3600 * 24);
+            timeFormat = 'd';
+            break;
+        }
+    }
+
+    document.querySelector('#info-last-visit').innerText = `: ${ interv }${ timeFormat} ago`;
+}
+
 firstLoad();
+lastVisit();
 
 generateUID();
