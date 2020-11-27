@@ -8,36 +8,41 @@ function onClickGenerate(){
         return;
     }
 
+    const user = { name };
+
     //сгенерировать число для аватара и использовать url из API (0 -- 99)
     //https://randomuser.me/api/portraits/men/77.jpg
     //сгенерировать ссылку на аватар
     const avaN = random(0, 99);
     const avaG = gender == 'female' ? 'women' : 'men';
-    const ava = `https://randomuser.me/api/portraits/${ avaG }/${ avaN }.jpg`;
+    user.ava = `https://randomuser.me/api/portraits/${ avaG }/${ avaN }.jpg`;
 
     //сгенерировать ХП и МП
-    const hp = random(1, 100);
-    const mp = random(1, 100);
-    const lvl = random(1, 10);
+    user.hp = random(1, 100);
+    user.mp = random(1, 100);
+    user.lvl = random(1, 10);
+    user.uid = generateUID();
 
     //Сгенерировать расу
     const races = ['Human', 'Elven', 'Orc', 'Dragon', 'Dwarf', 'Undead', 'Troll', 'Night Elf',
     'Draenei', 'Worgen', 'Pandaren', 'Tauren', 'Blood Elf', 'Goblin'];
-    const race = races[random(0, races.length - 1)];
+    user.race = races[random(0, races.length - 1)];
 
     //Сгенерировать класс
     const classes = ['Warrior', 'Mage', 'Warlock', 'Knight', 'Druid', 'Monk', 'Prophet', 'Hunter',
     'Rogue', 'Paladin', 'Shaman', 'Priest', 'Death Knight', 'Demon Hunter'];
-    const clas = classes[random(0, classes.length - 1)];
+    user.clas = classes[random(0, classes.length - 1)];
 
     //Сформировать HTML и вставить в контейнер(body)
-    saveUser(name, gender, ava, hp, mp, race, clas, lvl);
+    saveUser(user);
 
-    renderUser({ name, ava, hp, mp, race, clas, lvl });
+    renderUser(user);
 
 }
 
-function renderUser({ name, ava, hp, mp, race, clas, lvl }){
+function renderUser({ name, ava, hp, mp, race, clas, lvl, uid }){
+    const delClass = `btn-del-${ uid }`;
+
     const heroHtml = `
     <div class="col mb-4">
     <div class="card h-100">
@@ -57,12 +62,28 @@ function renderUser({ name, ava, hp, mp, race, clas, lvl }){
                 border-radius: 10px;" class="card-text p-2">LVL ${lvl}</span>
             </div>
             <p class="card-text">${ clas }</p>
+            <div>
+                <button type="button" class="btn btn-warning ${ delClass }" data-uid="${ uid }">Delete</button>
+            </div>
         </div>
     </div>
     </div>`;
 
     document.querySelector('#hero-container').innerHTML += heroHtml;
 
+    document.querySelector(`.${ delClass }`).addEventListener('click', deleteUser);
+}
+
+function deleteUser({ target }){
+    const uidF = target.dataset.uid;
+
+    let users = Cookie.get('users');
+    users = users === '' ? [] : JSON.parse(users);
+
+    users = users.filter(({ uid }) => uid != uidF);
+    Cookie.set('users', JSON.stringify(users), 30);  
+
+    firstLoad();
 }
 
 function inputAndCheckName(){
@@ -92,9 +113,7 @@ function random(from = 1, to = 100){
     return Math.floor(Math.random() * (to - from + 1) + from);
 }
 
-function saveUser(name, gender, ava, hp, mp, race, clas, lvl){
-    const user = { name, gender, ava, hp, mp, race, clas, lvl };
-
+function saveUser(user){
     let users = Cookie.get('users');
     users = users === '' ? [] : JSON.parse(users);
     users.push(user);
@@ -106,6 +125,8 @@ function firstLoad(){
     users = users === '' ? [] : JSON.parse(users);
 
     console.log(users);
+
+    document.querySelector('#hero-container').innerHTML = '';
 
     users.forEach(renderUser);
 }
@@ -130,4 +151,12 @@ class Cookie{
     }
 }
 
+function generateUID(){
+    const r = (Math.floor(Math.random() * 1000000)).toString(16);
+    const d = Date.now().toString(16);
+    return r + d;
+}
+
 firstLoad();
+
+generateUID();
